@@ -7,6 +7,11 @@ function hypeanimations_panel_upload() {
 	$upload_dir = wp_upload_dir();
 	$anims_dir=$upload_dir['basedir'].'/hypeanimations/';
 	if (isset($_FILES['file'])) {
+		if(strpos(basename($_FILES['file']['name']), " ") !== false)
+		{
+		   echo "<script>alert('You seem to have a space in your animation name. Please remove the space and regenerate the animation.');document.getElementById('closeDroper').click();</script>";
+		   die;
+		}
 		$uploaddir = $anims_dir.'tmp/';
 		$uploadfinaldir = $anims_dir;
 		$uploadfile = $uploaddir . basename($_FILES['file']['name']);
@@ -101,7 +106,7 @@ function add_hypeanimations_shortcode_newbutton_footer() {
 	<div id="oModal1" class="oModal">
 		<div>	
 			<header>
-				<a href="#fermer"  class="droitefermer">X</a>
+				<a href="#fermer" id="closeDroper"  class="droitefermer">X</a>
 				<h2>'.__( 'Upload new animation' , 'hype-animations' ).'</h2>
 			</header>
 			<section>
@@ -226,6 +231,11 @@ function hypeanimations_panel() {
 		//print_r($_FILES);
 	}*/
 	if (isset($_FILES['updatefile']) && sanitize_text_field($_POST['dataid']>0)) {
+		if(strpos(basename($_FILES['updatefile']['name']), " ") !== false)
+		{
+		   echo "<script>alert('You seem to have a space in your animation name. Please remove the space and regenerate the animation.');location.reload();</script>";
+		   die;
+		}
 		$actdataid=ceil($_POST['dataid']);
 		$uploaddir = $anims_dir.'tmp/';
 		$uploadfinaldir = $anims_dir;
